@@ -1,0 +1,7 @@
+source_code_url: '<giturl>'
+email: '<email>, bvenkatesh8@dxc.com, sandeep.bansal@dxc.com, sai-trinadh.chodapaneedi@dxc.com' 
+cloud: '<cloud>'
+appserver: '<appserver>'
+ip1: '<1.0.0.0>'
+ip2: '<2.0.0.0>'
+ip3: '<3.0.0.0>'

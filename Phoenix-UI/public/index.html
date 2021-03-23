@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./app.css">
+
+</head>
+
+<body ng-controller="myCtrl">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <a class="navbar-brand" href="#">DXC</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+
+        <!--
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Disabled</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdown01">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </ul>
+            </li>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+        </div>
+    </nav>
+
+    <main role="main">
+
+        <!-- Main jumbotron for a primary marketing message or call to action -->
+        <div class="jumbotron">
+            <div class="container">
+                <h1 class="display-3">{{title}}</h1>
+                <p>This is a description about Project Phoenix.</p>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-12">
+                    <form>
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-2 col-form-label">Email</label>
+                            <div class="col-sm-10">
+                                <!-- <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="email@example.com"> -->
+                                <input type="text" class="form-control" id="email" name="email" ng-model="formData.email" placeholder="Enter Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="cloud" class="col-sm-2 col-form-label">Cloud Provider</label>
+                            <div class="col-sm-10">
+                                <select class="custom-select mr-sm-2 text-uppercase" id="cloud" name="cloud" ng-model="formData.cloud" ng-options="x for x in cloudProviders">
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="type" class="col-sm-2 col-form-label">Infrastructure Provisioning by</label>
+                            <div class="col-sm-10">
+                                <input type="radio" name="type" value="Terraform" checked="checked"> Terraform
+                                <br>
+                                <input type="radio" name="type" value="Provide IPs"> Provide IPs
+                                
+                                <div id="textboxes">
+                                    <br>
+                                    <input type="text" class="form-control" id="ip1" ng-model="formData.ip1" placeholder="Enter First IP Address"  required>
+                                    <br>
+                                    <input type="text" class="form-control" id="ip2" ng-model="formData.ip2" placeholder="Enter Second IP Address"  required>
+                                    <br> 
+                                    <input type="text" class="form-control" id="ip3" ng-model="formData.ip3" placeholder="Enter Third IP Address"  required>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                        <div class="form-group row">
+                            <label for="appserver" class="col-sm-2 col-form-label">App Server</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="appserver" ng-model="formData.appserver" disabled>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="giturl" class="col-sm-2 col-form-label">Git url</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="giturl" name="giturl" ng-model="formData.giturl" placeholder="Enter Git url" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="float-right">
+                                    <input type="submit" class="btn btn-outline-primary" ng-click="initiatePhoenix(formData.cloud)" value="Initiate">
+                                    <input type="submit" class="btn btn-outline-danger" ng-click="destroyPhoenix(formData.cloud)" value="Destroy">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div ng-if="initiateResponse" class="animate-if alert alert-success" role="alert">
+                Successfully Initiated
+            </div>
+            <div ng-if="destroyResponse" class="animate-if alert alert-success" role="alert">
+                Successfully Destroyed
+            </div>
+            <div ng-if="initiateError" class="animate-if alert alert-danger" role="alert">
+                Unable to store data in the database
+            </div>
+            <div ng-if="destroyError" class="animate-if alert alert-danger" role="alert">
+                Data mismatch
+            </div>
+        </div>
+        <!-- /container -->
+
+    </main>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular-animate.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <!-- <script type="application/x-javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="application/x-javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.8/angular.min.js"></script>
+    <script type="application/x-javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script type="application/x-javascript" src="core.js"></script> -->
+    <script>
+        $('.alert').alert();
+    </script>
+
+
+    <script>
+        $(function() {
+            $("#textboxes").hide();
+
+            $('input[name="type"]').on('click', function() {
+                if ($(this).val() == 'Provide IPs') {
+                    $('#textboxes').show();
+                }
+                else {
+                    $('#textboxes').hide();
+                }
+            });
+        });
+
+        $('#ip1,#ip2,#ip3').keypress(function (e) {
+            var regex = new RegExp("^[0-9.]+$");
+            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            if (regex.test(str)) {
+            return true;
+            }
+
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+
+</html>
